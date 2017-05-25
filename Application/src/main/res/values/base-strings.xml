@@ -16,14 +16,5 @@
 -->
 
 <resources>
-    <string name="app_name">PdfRendererBasic</string>
-    <string name="intro_message">
-        <![CDATA[
-        
-            
-            This sample demonstrates how to use PdfRenderer to display PDF documents on the screen.
-            
-        
-        ]]>
-    </string>
+    <string name="app_name">IHC</string>
 </resources>
