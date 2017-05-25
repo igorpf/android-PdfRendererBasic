@@ -20,11 +20,14 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.pdf.PdfRenderer;
 import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,15 +42,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import butterknife.BindView;
+import static android.content.ContentValues.TAG;
 
-/**
- * This fragment has a big {@ImageView} that shows PDF pages, and 2
- * {@link android.widget.Button}s to move between pages. We use a
- * {@link android.graphics.pdf.PdfRenderer} to render PDF pages as
- * {@link android.graphics.Bitmap}s.
- */
-public class PdfRendererBasicFragment extends Fragment implements View.OnClickListener {
+public class PdfRendererFragment extends Fragment implements View.OnClickListener {
 
     private static final String STATE_CURRENT_PAGE_INDEX = "current_page_index";
     private static final String FILENAME = "sample.pdf";
@@ -56,7 +53,7 @@ public class PdfRendererBasicFragment extends Fragment implements View.OnClickLi
     private int mPageIndex;
     private PDFView mPdfView;
 
-    public PdfRendererBasicFragment() {
+    public PdfRendererFragment() {
     }
 
     @Override
@@ -70,6 +67,26 @@ public class PdfRendererBasicFragment extends Fragment implements View.OnClickLi
         super.onViewCreated(view, savedInstanceState);
         // Retain view references.
         mPdfView = (PDFView) view.findViewById(R.id.pdfView);
+        mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        mSensorManager.registerListener(new GyroscopeEventListener(mPdfView), mSensor, 200);
+//        mSensorManager.registerListener(new SensorEventListener() {
+//            @Override
+//            public void onSensorChanged(SensorEvent event) {
+//                Log.w(TAG, "onSensorChanged: "+event.values[0]);
+//                if(event.values[0] > 0.5f) { // anticlockwise
+//                    mPdfView.scrollBy(0,1);
+//                } else if(event.values[0] < -0.5f) { // clockwise
+//                    mPdfView.scrollBy(0,-1);
+//                }
+//                mPdfView.fitToWidth();
+//            }
+//
+//            @Override
+//            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+//
+//            }
+//        }, mSensor, 20);
 
         mPageIndex = 0;
         // If there is a savedInstanceState (screen orientations, etc.), we restore the page index.
@@ -107,12 +124,7 @@ public class PdfRendererBasicFragment extends Fragment implements View.OnClickLi
 
     @Override
     public void onStop() {
-//        try {
-            //close renderer
-//            mPdfView.
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        mPdfView.recycle();
         super.onStop();
     }
 
@@ -127,4 +139,5 @@ public class PdfRendererBasicFragment extends Fragment implements View.OnClickLi
     public void onClick(View v) {
 
     }
+
 }
