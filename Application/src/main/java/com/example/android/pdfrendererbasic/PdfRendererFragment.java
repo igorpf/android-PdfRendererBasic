@@ -21,7 +21,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -30,8 +29,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
-
-import static android.content.ContentValues.TAG;
 
 public class PdfRendererFragment extends Fragment  {
 
@@ -57,8 +54,8 @@ public class PdfRendererFragment extends Fragment  {
         // Retain view references.
         mPdfView = (PDFView) view.findViewById(R.id.pdfView);
         mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
-        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-        mSensorManager.registerListener(new GyroscopeEventListener(mPdfView), mSensor, 20*1000);//20ms
+        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mSensorManager.registerListener(new AccelerometerEventListener(mPdfView), mSensor, 20*1000);//20ms
         mPageIndex = 0;
         // If there is a savedInstanceState (screen orientations, etc.), we restore the page index.
         if (null != savedInstanceState) {
