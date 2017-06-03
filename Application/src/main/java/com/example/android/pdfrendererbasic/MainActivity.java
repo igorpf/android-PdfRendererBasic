@@ -17,11 +17,15 @@
 package com.example.android.pdfrendererbasic;
 
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String FRAGMENT_PDF_RENDERER_BASIC = "pdf_renderer_basic";
+    private boolean isLocked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,5 +38,40 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_info:
+                new AlertDialog.Builder(this)
+                        .setMessage(R.string.help)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show();
+                return true;
+            case R.id.action_lock:
+                isLocked = true;
+                supportInvalidateOptionsMenu();
+                return true;
+            case R.id.action_unlock:
+                isLocked = false;
+                supportInvalidateOptionsMenu();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem lock = menu.findItem(R.id.action_lock);
+        MenuItem unlock = menu.findItem(R.id.action_unlock);
+
+        lock.setVisible(!isLocked);
+        unlock.setVisible(isLocked);
+        ((PdfRendererFragment)getSupportFragmentManager().findFragmentById(R.id.container)).setLocked(isLocked);
+        return true;
+    }
 }

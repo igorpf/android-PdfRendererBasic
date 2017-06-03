@@ -15,7 +15,7 @@ import static android.content.ContentValues.TAG;
 public class GestureListener implements GestureDetector.OnGestureListener{
 
     private PDFView mPdfView;
-    private float scale = 1, step = 0.05f;
+    private float scale = 1, step = 0.03f;
     public GestureListener(PDFView mPdfView) {
         this.mPdfView = mPdfView;
     }

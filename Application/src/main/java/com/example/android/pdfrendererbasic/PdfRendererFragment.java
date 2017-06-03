@@ -38,7 +38,7 @@ public class PdfRendererFragment extends Fragment  {
     private Sensor mSensor;
     private int mPageIndex;
     private PDFView mPdfView;
-
+    private AccelerometerEventListener accelerometerEventListener;
     public PdfRendererFragment() {
     }
 
@@ -55,7 +55,8 @@ public class PdfRendererFragment extends Fragment  {
         mPdfView = (PDFView) view.findViewById(R.id.pdfView);
         mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mSensorManager.registerListener(new AccelerometerEventListener(mPdfView), mSensor, 20*1000);//20ms
+        accelerometerEventListener = new AccelerometerEventListener(mPdfView);
+        mSensorManager.registerListener(accelerometerEventListener, mSensor, 20*1000);//20ms
         mPageIndex = 0;
         // If there is a savedInstanceState (screen orientations, etc.), we restore the page index.
         if (null != savedInstanceState) {
@@ -106,5 +107,8 @@ public class PdfRendererFragment extends Fragment  {
 
     }
 
+    public void setLocked(boolean locked) {
+        accelerometerEventListener.setLocked(locked);
+    }
 
 }

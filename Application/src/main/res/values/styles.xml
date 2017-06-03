@@ -16,8 +16,10 @@
 -->
 <resources>
     <style name="Theme.PdfRendererBasic" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#F44336</item>
-        <item name="colorPrimaryDark">#D32F2F</item>
+        <item name="colorPrimary">#3355d1</item>
+        <item name="colorPrimaryDark">#1a28a7</item>
         <item name="colorAccent">#00BCD4</item>
+        <item name="android:textColorSecondary">#FFFFFF</item>
     </style>
+
 </resources>

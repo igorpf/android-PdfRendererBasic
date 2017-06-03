@@ -17,10 +17,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <item
+        android:id="@+id/action_unlock"
+        android:icon="@drawable/ic_lock_open_white_24dp"
+        android:title="@string/unlock"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_lock"
+        android:icon="@drawable/ic_lock_outline_white_24dp"
+        android:title="@string/lock"
+        app:showAsAction="ifRoom"/>
+
     <item
         android:id="@+id/action_info"
         android:icon="@drawable/ic_info"
-        android:title="@string/info"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/help"
+        app:showAsAction="never"/>
 
 </menu>

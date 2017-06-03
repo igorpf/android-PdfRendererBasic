@@ -16,9 +16,8 @@
 -->
 <resources>
 
-    <string name="app_name_with_index">PdfRendererBasic (%1$d/%2$d)</string>
-    <string name="info">Info</string>
-    <string name="previous">Previous</string>
-    <string name="next">Next</string>
+    <string name="help">Ajuda</string>
+    <string name="unlock">Destravar</string>
+    <string name="lock">Travar</string>
 
 </resources>
