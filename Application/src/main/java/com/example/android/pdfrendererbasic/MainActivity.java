@@ -16,6 +16,8 @@
 
 package com.example.android.pdfrendererbasic;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -47,7 +49,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_open:
+                //Search and open file
+                new AlertDialog.Builder(this)
+                        .setMessage(R.string.open)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show();
+                return true;
             case R.id.action_info:
+                //Show help
                 new AlertDialog.Builder(this)
                         .setMessage(R.string.help)
                         .setPositiveButton(android.R.string.ok, null)
@@ -60,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_unlock:
                 isLocked = false;
                 supportInvalidateOptionsMenu();
+                return true;
+            case R.id.action_SetPosition:
+                //Reset default position
                 return true;
         }
         return super.onOptionsItemSelected(item);

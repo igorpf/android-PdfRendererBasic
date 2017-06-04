@@ -19,16 +19,26 @@
 
 
     <item
+        android:id="@+id/action_SetPosition"
+        android:icon="@android:drawable/stat_notify_sync"
+        android:title="Set"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_unlock"
         android:icon="@drawable/ic_lock_open_white_24dp"
         android:title="@string/unlock"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_lock"
         android:icon="@drawable/ic_lock_outline_white_24dp"
         android:title="@string/lock"
         app:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/action_open"
+        android:icon="@color/cardview_light_background"
+        android:title="@string/open"
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_info"
         android:icon="@drawable/ic_info"
