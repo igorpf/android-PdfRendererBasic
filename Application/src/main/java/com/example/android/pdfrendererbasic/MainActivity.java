@@ -16,8 +16,7 @@
 
 package com.example.android.pdfrendererbasic;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -58,11 +57,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.action_info:
                 //Show help
-                new AlertDialog.Builder(this)
-                        .setMessage(R.string.help)
-                        .setPositiveButton(android.R.string.ok, null)
-                        .show();
-                return true;
+                Dialog dialog = new Dialog(this, R.style.AppTheme);
+                dialog.setContentView(R.layout.help_dialog);
+                dialog.show();
             case R.id.action_lock:
                 isLocked = true;
                 supportInvalidateOptionsMenu();
@@ -84,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         lock.setVisible(!isLocked);
         unlock.setVisible(isLocked);
-        ((PdfRendererFragment)getSupportFragmentManager().findFragmentById(R.id.container)).setLocked(isLocked);
+        ((PdfRendererFragment) getSupportFragmentManager().findFragmentById(R.id.container)).setLocked(isLocked);
         return true;
     }
 }
