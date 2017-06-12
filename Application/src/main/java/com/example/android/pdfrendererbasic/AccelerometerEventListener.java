@@ -3,7 +3,6 @@ package com.example.android.pdfrendererbasic;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.github.barteksc.pdfviewer.PDFView;
@@ -20,7 +19,7 @@ public class AccelerometerEventListener implements SensorEventListener {
 
     private double offset = 0.0f, scroll=0.0f;
     private final double step = 0.003f;
-    private final float threshold =6.2f;
+    private final float verticalScrollThreshold =6.2f,horizontalScrollThreshold =3.2f;
     private final int X=0, Y=1, Z=2;
     private boolean locked;
 
@@ -32,12 +31,18 @@ public class AccelerometerEventListener implements SensorEventListener {
         if(locked)
             return;
         Log.w(TAG, "on: "+event.values[Y]+" offset: "+ offset+" scroll: "+ scroll);
-        if(event.values[Y] > threshold) { // anticlockwise
+        if(event.values[Y] > verticalScrollThreshold) {
             offset +=step;
-        } else if(event.values[Y] > -threshold && event.values[Y] < 3.0) { // clockwise
+        } else if(event.values[Y] > -verticalScrollThreshold && event.values[Y] < 3.0) {
             offset -=step;
         }
-//        mPdfView
+        int scroll = 3;
+        if(event.values[X] > horizontalScrollThreshold) {
+            mPdfView.scrollBy(-scroll,0);
+        } else if(event.values[X] < -horizontalScrollThreshold) {
+            mPdfView.scrollBy(scroll,0);
+        }
+
         offset = offset >1? 1: offset <0? 0 : offset;
         mPdfView.setPositionOffset((float) offset);
     }
