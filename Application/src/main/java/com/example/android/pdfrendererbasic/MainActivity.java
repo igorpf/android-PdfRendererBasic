@@ -84,4 +84,7 @@ public class MainActivity extends AppCompatActivity {
         ((PdfRendererFragment) getSupportFragmentManager().findFragmentById(R.id.container)).setLocked(isLocked);
         return true;
     }
+    public void changeLock() {
+        isLocked = !isLocked;
+    }
 }

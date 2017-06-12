@@ -37,6 +37,7 @@ public class AccelerometerEventListener implements SensorEventListener {
         } else if(event.values[Y] > -threshold && event.values[Y] < 3.0) { // clockwise
             offset -=step;
         }
+//        mPdfView
         offset = offset >1? 1: offset <0? 0 : offset;
         mPdfView.setPositionOffset((float) offset);
     }

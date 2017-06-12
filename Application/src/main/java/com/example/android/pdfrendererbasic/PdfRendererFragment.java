@@ -80,7 +80,7 @@ public class PdfRendererFragment extends Fragment  {
                     .scrollHandle(null)
                     .enableAntialiasing(true) // improve rendering a little bit on low-res screens
                     .load();
-            final GestureDetector gestureDetector = new GestureDetector(getActivity(), new GestureListener(mPdfView));
+            final GestureDetector gestureDetector = new GestureDetector(getActivity(), new GestureListener(mPdfView, this));
             mPdfView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {

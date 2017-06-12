@@ -1,5 +1,6 @@
 package com.example.android.pdfrendererbasic;
 
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -12,12 +13,14 @@ import static android.content.ContentValues.TAG;
  * Created by igor on 27/05/17.
  */
 
-public class GestureListener implements GestureDetector.OnGestureListener{
+public class GestureListener extends GestureDetector.SimpleOnGestureListener implements GestureDetector.OnGestureListener {
 
     private PDFView mPdfView;
     private float scale = 1, step = 0.03f;
-    public GestureListener(PDFView mPdfView) {
+    private Fragment fragment;
+    public GestureListener(PDFView mPdfView, Fragment fragment) {
         this.mPdfView = mPdfView;
+        this.fragment = fragment;
     }
     @Override
     public boolean onDown(MotionEvent e) {
@@ -27,6 +30,7 @@ public class GestureListener implements GestureDetector.OnGestureListener{
     @Override
     public void onShowPress(MotionEvent e) {
     }
+
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
@@ -60,6 +64,13 @@ public class GestureListener implements GestureDetector.OnGestureListener{
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         return false;
+    }
+    @Override
+    public boolean onDoubleTap(MotionEvent e) {
+        MainActivity activity = (MainActivity)((PdfRendererFragment) fragment).getActivity();
+        activity.changeLock();
+        activity.supportInvalidateOptionsMenu();
+        return true;
     }
 
 }
