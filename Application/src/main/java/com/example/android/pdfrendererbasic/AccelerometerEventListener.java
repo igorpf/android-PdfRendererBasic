@@ -18,7 +18,7 @@ public class AccelerometerEventListener implements SensorEventListener {
     private PDFView mPdfView;
 
     private double offset = 0.0f, scroll=0.0f;
-    private final double step = 0.003f;
+    private final double step = 0.002f;
     private final float verticalScrollThreshold =6.2f,horizontalScrollThreshold =3.2f;
     private final int X=0, Y=1, Z=2;
     private boolean locked;
@@ -32,9 +32,9 @@ public class AccelerometerEventListener implements SensorEventListener {
             return;
         Log.w(TAG, "on: "+event.values[Y]+" offset: "+ offset+" scroll: "+ scroll);
         if(event.values[Y] > verticalScrollThreshold) {
-            offset +=step;
+            offset +=step/GestureListener.GetScale();
         } else if(event.values[Y] > -verticalScrollThreshold && event.values[Y] < 3.0) {
-            offset -=step;
+            offset -=step/GestureListener.GetScale();
         }
         int scroll = 3;
         if(event.values[X] > horizontalScrollThreshold) {
