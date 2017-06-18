@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 supportInvalidateOptionsMenu();
                 return true;
             case R.id.action_SetPosition:
-                //Reset default position
+                AccelerometerEventListener.SetDefaulPositioning();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         lock.setVisible(!isLocked);
         unlock.setVisible(isLocked);
         ((PdfRendererFragment) getSupportFragmentManager().findFragmentById(R.id.container)).setLocked(isLocked);
+        AccelerometerEventListener.SetDefaulPositioning();
         return true;
     }
     public void changeLock() {

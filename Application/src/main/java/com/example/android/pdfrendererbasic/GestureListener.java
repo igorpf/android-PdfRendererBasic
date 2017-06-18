@@ -9,10 +9,6 @@ import com.github.barteksc.pdfviewer.PDFView;
 
 import static android.content.ContentValues.TAG;
 
-/**
- * Created by igor on 27/05/17.
- */
-
 public class GestureListener extends GestureDetector.SimpleOnGestureListener implements GestureDetector.OnGestureListener {
 
     private PDFView mPdfView;
@@ -59,6 +55,7 @@ public class GestureListener extends GestureDetector.SimpleOnGestureListener imp
 
     @Override
     public void onLongPress(MotionEvent e) {
+        AccelerometerEventListener.SetDefaulPositioning();
     }
 
     @Override
@@ -73,6 +70,6 @@ public class GestureListener extends GestureDetector.SimpleOnGestureListener imp
         return true;
     }
 
-    public static float GetScale(){return scale*3;}
+    public static float GetScale(){return scale*5;}
 
 }
