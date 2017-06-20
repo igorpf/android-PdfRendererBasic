@@ -19,6 +19,7 @@ package com.example.android.pdfrendererbasic;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.GestureDetector;
@@ -39,6 +40,9 @@ public class PdfRendererFragment extends Fragment  {
     private int mPageIndex;
     private PDFView mPdfView;
     private AccelerometerEventListener accelerometerEventListener;
+    private boolean firstTimeStart = true;
+    private Uri currentFile;
+    private GestureListener gestureListener;
     public PdfRendererFragment() {
     }
 
@@ -70,7 +74,8 @@ public class PdfRendererFragment extends Fragment  {
         super.onStart();
         try {
             mPdfView.useBestQuality(true);
-            mPdfView.fromAsset(FILENAME)
+            PDFView.Configurator c = (firstTimeStart || currentFile == null? mPdfView.fromAsset(FILENAME):mPdfView.fromUri(currentFile));
+                c
                     .enableSwipe(false) // allows to block changing pages using swipe
                     .swipeHorizontal(false)
                     .enableDoubletap(false)
@@ -80,7 +85,8 @@ public class PdfRendererFragment extends Fragment  {
                     .scrollHandle(null)
                     .enableAntialiasing(true) // improve rendering a little bit on low-res screens
                     .load();
-            final GestureDetector gestureDetector = new GestureDetector(getActivity(), new GestureListener(mPdfView, this));
+            gestureListener = new GestureListener(mPdfView, this);
+            final GestureDetector gestureDetector = new GestureDetector(getActivity(), gestureListener);
             mPdfView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -109,6 +115,14 @@ public class PdfRendererFragment extends Fragment  {
 
     public void setLocked(boolean locked) {
         accelerometerEventListener.setLocked(locked);
+    }
+
+    public void openFile(Uri uri) {
+        mPdfView.recycle();
+        currentFile = uri;
+        gestureListener.restartScale();
+        accelerometerEventListener.restartPosition();
+        firstTimeStart = false;
     }
 
 }

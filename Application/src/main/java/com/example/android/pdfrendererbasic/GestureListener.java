@@ -55,7 +55,7 @@ public class GestureListener extends GestureDetector.SimpleOnGestureListener imp
 
     @Override
     public void onLongPress(MotionEvent e) {
-        AccelerometerEventListener.SetDefaulPositioning();
+        AccelerometerEventListener.setDefaulPositioning();
     }
 
     @Override
@@ -70,6 +70,12 @@ public class GestureListener extends GestureDetector.SimpleOnGestureListener imp
         return true;
     }
 
-    public static float GetScale(){return scale*5;}
+    public static float getScale(){return scale*5;}
+
+    public void restartScale(){
+        scale=1;
+        mPdfView.setScaleX(scale);
+        mPdfView.setScaleY(scale);
+    }
 
 }

@@ -17,15 +17,21 @@
 package com.example.android.pdfrendererbasic;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.aditya.filebrowser.Constants;
+import com.aditya.filebrowser.FileChooser;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String FRAGMENT_PDF_RENDERER_BASIC = "pdf_renderer_basic";
+    private static final int OPEN_FILE = 0;
     private boolean isLocked = false;
 
     @Override
@@ -50,10 +56,9 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_open:
                 //Search and open file
-                new AlertDialog.Builder(this)
-                        .setMessage(R.string.open)
-                        .setPositiveButton(android.R.string.ok, null)
-                        .show();
+                Intent i2 = new Intent(getApplicationContext(), FileChooser.class);
+                i2.putExtra(Constants.SELECTION_MODE, Constants.SELECTION_MODES.SINGLE_SELECTION.ordinal());
+                startActivityForResult(i2,OPEN_FILE);
                 return true;
             case R.id.action_info:
                 //Show help
@@ -69,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 supportInvalidateOptionsMenu();
                 return true;
             case R.id.action_SetPosition:
-                AccelerometerEventListener.SetDefaulPositioning();
+                AccelerometerEventListener.setDefaulPositioning();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -82,9 +87,24 @@ public class MainActivity extends AppCompatActivity {
         lock.setVisible(!isLocked);
         unlock.setVisible(isLocked);
         ((PdfRendererFragment) getSupportFragmentManager().findFragmentById(R.id.container)).setLocked(isLocked);
-        AccelerometerEventListener.SetDefaulPositioning();
+        AccelerometerEventListener.setDefaulPositioning();
         return true;
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == OPEN_FILE && data!=null) {
+            if (resultCode == RESULT_OK) {
+                Uri file = data.getData();
+                if(isValidFile(file.toString())){
+                    ((PdfRendererFragment) getSupportFragmentManager().findFragmentById(R.id.container)).openFile(file);
+                } else {
+                    Toast.makeText(this, "Arquivo inválido", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+    private boolean isValidFile(String name){return name != null && name.endsWith(".pdf");}
     public void changeLock() {
         isLocked = !isLocked;
     }
