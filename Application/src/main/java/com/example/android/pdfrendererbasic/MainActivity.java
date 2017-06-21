@@ -68,13 +68,16 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_lock:
                 isLocked = true;
                 supportInvalidateOptionsMenu();
+                displayLockToast();
                 return true;
             case R.id.action_unlock:
                 isLocked = false;
                 supportInvalidateOptionsMenu();
+                displayUnlockToast();
                 return true;
             case R.id.action_SetPosition:
                 AccelerometerEventListener.setDefaulPositioning();
+                displayPositionToast();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -88,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         unlock.setVisible(isLocked);
         ((PdfRendererFragment) getSupportFragmentManager().findFragmentById(R.id.container)).setLocked(isLocked);
         AccelerometerEventListener.setDefaulPositioning();
+
         return true;
     }
 
@@ -108,4 +112,8 @@ public class MainActivity extends AppCompatActivity {
     public void changeLock() {
         isLocked = !isLocked;
     }
+    public boolean getLock() {return isLocked;}
+    public void displayPositionToast() {Toast.makeText(getApplicationContext(), "Posição padrão alterada.", Toast.LENGTH_SHORT).show();}
+    public void displayLockToast() {Toast.makeText(getApplicationContext(), "Rolamento de tela travado", Toast.LENGTH_SHORT).show();}
+    public void displayUnlockToast() {Toast.makeText(getApplicationContext(), "Rolamento de tela destravado", Toast.LENGTH_SHORT).show();}
 }

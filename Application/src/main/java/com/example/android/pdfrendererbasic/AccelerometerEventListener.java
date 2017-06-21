@@ -3,14 +3,14 @@ package com.example.android.pdfrendererbasic;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-
+import android.util.Log;
 import com.github.barteksc.pdfviewer.PDFView;
-
+import static android.content.ContentValues.TAG;
 public class AccelerometerEventListener implements SensorEventListener {
 
     private PDFView mPdfView;
 
-    private double offset = 0.0f, scroll=0.0f;
+    private double offset = 0.0f;
     private final double step = 0.002f;
     private final float verticalScrollThreshold =6.2f,horizontalScrollThreshold =1.6f;
     private final int X=0, Y=1, Z=2;
@@ -26,7 +26,8 @@ public class AccelerometerEventListener implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
         if(locked)
             return;
-//        Log.w(TAG, "Real Y: "+event.values[Y]+"\tY Default: "+default_position[1]+"\tAdjusted Y: "+aux+"\toffset: "+ offset+"\tscroll: "+ scroll);
+        //double aux = event.values[Y]-default_position[1];
+        //Log.w(TAG, "Real Y: "+event.values[Y]+"\tY Default: "+default_position[1]+"\tAdjusted Y: "+aux+"\toffset: "+ offset+"\tscroll: "+ scroll);
 
         if (event.values[Y] > 0 && (int)(event.values[Y]-default_position[1]) >= 0)
             offset += step * scroll_weight[(int) (event.values[Y] - default_position[1])] / GestureListener.getScale();

@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
 
@@ -55,7 +56,9 @@ public class GestureListener extends GestureDetector.SimpleOnGestureListener imp
 
     @Override
     public void onLongPress(MotionEvent e) {
+        MainActivity activity = (MainActivity)((PdfRendererFragment) fragment).getActivity();
         AccelerometerEventListener.setDefaulPositioning();
+        activity.displayPositionToast();
     }
 
     @Override
@@ -67,6 +70,10 @@ public class GestureListener extends GestureDetector.SimpleOnGestureListener imp
         MainActivity activity = (MainActivity)((PdfRendererFragment) fragment).getActivity();
         activity.changeLock();
         activity.supportInvalidateOptionsMenu();
+        if(activity.getLock())
+            activity.displayLockToast();
+        else
+            activity.displayUnlockToast();
         return true;
     }
 
