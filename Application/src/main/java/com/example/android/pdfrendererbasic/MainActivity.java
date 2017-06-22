@@ -16,7 +16,6 @@
 
 package com.example.android.pdfrendererbasic;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -62,9 +61,12 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.action_info:
                 //Show help
-                Dialog dialog = new Dialog(this, R.style.AppTheme);
-                dialog.setContentView(R.layout.help_dialog);
-                dialog.show();
+                //Dialog dialog = new Dialog(this, R.style.AppTheme);
+                //dialog.setContentView(R.layout.help_dialog);
+                //dialog.show();
+                Intent HelpMenu = new Intent(this, HelpActivity.class);
+                startActivity(HelpMenu);
+
             case R.id.action_lock:
                 isLocked = true;
                 supportInvalidateOptionsMenu();
