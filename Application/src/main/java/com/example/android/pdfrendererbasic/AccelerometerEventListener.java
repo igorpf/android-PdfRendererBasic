@@ -34,11 +34,13 @@ public class AccelerometerEventListener implements SensorEventListener {
         else
             offset -= step * scroll_weight[-(int) (event.values[Y] - default_position[1])] / GestureListener.getScale();
 
-        int scroll = 5;
+        int scroll = 5,limit=150*(int)(GestureListener.getScale()/5);
         if(event.values[X] - default_position[0] > horizontalScrollThreshold) {
-            mPdfView.scrollBy(-scroll,0);
+            int s = -scroll+mPdfView.getScrollX();
+            mPdfView.setScrollX(s<-limit?-limit:s);
         } else if(event.values[X] < -horizontalScrollThreshold) {
-            mPdfView.scrollBy(scroll,0);
+            int s = scroll + mPdfView.getScrollX();
+            mPdfView.setScrollX(s > limit? limit:s);
         }
 
         offset = offset >1? 1: offset <0? 0 : offset;
